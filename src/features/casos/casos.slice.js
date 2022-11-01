@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  casos: {},
+  casos: []
 }
 
 export const casosSlice = createSlice({
@@ -9,13 +9,12 @@ export const casosSlice = createSlice({
   initialState,
   reducers: {
     setCasosList: (state, action) => {
-      console.log('Login', state, action)
+      state.casos = action.payload
     },
-
   },
 })
 
-export const selectCasosList = state => state.casos.casos
+export const selectCasosList = state => state.casos
 
 export const { setCasosList } = casosSlice.actions
 

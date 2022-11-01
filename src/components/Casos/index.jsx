@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react'
-import { useCasos } from '../../features/casos/casos.actions'
+import { CasosList } from "./components/CasosList"
 
 export const Casos = () => {
-  const { getCasosList, casosList } = useCasos()
-
-  useEffect(() => {
-    getCasosList();
-  }, [])
-
   return (
-    <div>Casos</div>
+    <>
+      <CasosList />
+    </>
   )
 }
