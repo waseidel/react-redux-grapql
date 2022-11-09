@@ -1,35 +1,34 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { ProtectedRoutes } from "./components/ProtectedRoutes";
-
-import { Dashboard } from "./Layouts/Dashboard";
-import { Auth } from "./Layouts/Auth";
-
-import { Landing } from "./Pages/Landing";
-import { Home } from "./Pages/Home";
-import { Error404 } from "./Pages/Error404";
-import { Register } from "./Pages/auth/Register";
-import { Login } from "./Pages/auth/Login";
-import { Casos } from "./Pages/Casos";
+import { ProtectedRoutes } from "./app/components";
+import { Dashboard, Auth } from "./app/layouts";
+import {
+  HomePage,
+  LoginPage,
+  RegisterPage,
+  Error404Page,
+  LandingPage,
+  CasosPage,
+} from "./app/containers";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Landing />} />
-        <Route path="/landing" element={<Landing />}>
-          <Route path="" element={<Casos />} />
+        <Route index element={<LandingPage />} />
+        <Route path="/landing" element={<LandingPage />}>
+          <Route path="" element={<CasosPage />} />
         </Route>
         <Route path="/dashboard" element={<ProtectedRoutes />}>
           <Route element={<Dashboard />}>
-            <Route path="" element={<Home />} />
+            <Route path="" element={<HomePage />} />
           </Route>
         </Route>
         <Route path="/auth" element={<Auth />}>
-          <Route path="login" index element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route path="login" index element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
         </Route>
-        <Route path="*" element={<Error404 />} />
+        <Route path="*" element={<Error404Page />} />
       </Routes>
     </BrowserRouter>
   );
