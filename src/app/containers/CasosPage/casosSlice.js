@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const namespace = "casos";
+
 const initialState = {
   casos: [],
   isLoading: true,
 };
 
 const casosSlice = createSlice({
-  name: "casos",
+  name: namespace,
   initialState,
   reducers: {
     setCasos(state, action) {

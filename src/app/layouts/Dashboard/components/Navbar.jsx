@@ -1,4 +1,12 @@
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
+import { createSelector } from "reselect";
+import { makeSelectUser } from "../../../containers/auth/selectors";
+
+const stateSelector = createSelector(makeSelectUser, (user) => ({ user }));
+
 export const Navbar = () => {
+  const { user } = useSelector(stateSelector);
   return (
     <div className="w-full h-screen">
       <header className="pb-2">
@@ -7,12 +15,18 @@ export const Navbar = () => {
             <NavLink to="/">Home</NavLink>
           </div>
           <ul className="flex flex-row space-x-3">
-            <li>
-              <NavLink to="/auth/login">Iniciar Sesión</NavLink>
-            </li>
-            <li>
-              <NavLink to="/auth/register">Registrarse</NavLink>
-            </li>
+            {user ? (
+              <li>{user.name}</li>
+            ) : (
+              <>
+                <li>
+                  <NavLink to="/auth/login">Iniciar Sesión</NavLink>
+                </li>
+                <li>
+                  <NavLink to="/auth/register">Registrarse</NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </nav>
       </header>

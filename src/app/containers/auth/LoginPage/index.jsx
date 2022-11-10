@@ -1,11 +1,9 @@
 import { Form, Formik } from "formik";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
-import { setLogin } from "../authSlice";
 
 import { InputField } from "../../../components";
-import authService from "../../../services/authService";
+import { useAuth } from "../../../hooks/useAuth";
 
 const validation = Yup.object().shape({
   email: Yup.string()
@@ -14,20 +12,9 @@ const validation = Yup.object().shape({
   password: Yup.string().required("La contraseña es obligatoria"),
 });
 
-const actionDispatch = (dispatch) => ({
-  setLogin: (auth) => dispatch(setLogin(auth)),
-});
-
 export const LoginPage = () => {
-  const { setLogin } = actionDispatch(useDispatch());
-  const login = async ({ email, password }) => {
-    const response = await authService
-      .login({ email, password })
-      .catch((err) => {
-        console.log("Error", err);
-      });
-    if (response) setLogin(response);
-  };
+  const { login, isLoading } = useAuth();
+
   const initialValues = {
     email: "",
     password: "",
@@ -75,7 +62,8 @@ export const LoginPage = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="inline-block w-full px-7 py-3 mb-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              className="inline-block w-full px-7 py-3 mb-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out disabled:bg-blue-400 disabled:text-slate-400"
+              disabled={isLoading}
             >
               Iniciar Sesión
             </button>
