@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const namespace = "auth";
 
@@ -9,22 +9,21 @@ const initialState = {
   error: false,
 };
 
-export const fetchLogin = createAsyncThunk(
-  `${namespace}/login`,
-  async ({ data }) => {
-    console.log("Definition:", data);
-    return data;
-  }
-);
-
 const authSlice = createSlice({
   name: namespace,
   initialState,
-  reducers: {},
+  reducers: {
+    setLogin(state, action) {
+      state.user = action.payload.login.user;
+      state.token = action.payload.login.token;
+      state.isLoading = false;
+    },
+  },
 });
 
-// export const {} authSlice.actions
+export const { setLogin } = authSlice.actions;
 
-export const { user, token } = (state) => state;
+export const { user } = (state) => state.user;
+export const { token } = (state) => state.token;
 
 export default authSlice.reducer;

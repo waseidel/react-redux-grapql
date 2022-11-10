@@ -3,16 +3,12 @@ import { createSelector } from "reselect";
 import { Caso } from "./Caso";
 import { makeSelectCasos } from "./selectors";
 
-const stateSelector = createSelector(makeSelectCasos, (casos, isLoading) => ({
+const stateSelector = createSelector(makeSelectCasos, (casos) => ({
   casos,
-  isLoading,
 }));
 
 export const Casos = () => {
-  const { casos, isLoading } = useSelector(stateSelector);
-  if (isLoading) {
-    return "Loading...";
-  }
+  const { casos } = useSelector(stateSelector);
   return (
     <div className="border bg-white shadow rounded text-black text-sm p-4">
       <div className="flex justify-between">

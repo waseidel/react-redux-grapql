@@ -1,5 +1,6 @@
 import { apolloClient } from "../../graphql";
 import { GET_CASOS } from "./queries";
+
 class CasosService {
   async getCasos() {
     try {

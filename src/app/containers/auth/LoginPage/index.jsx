@@ -1,8 +1,11 @@
 import { Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import * as Yup from "yup";
+import { setLogin } from "../authSlice";
 
 import { InputField } from "../../../components";
+import authService from "../../../services/authService";
 
 const validation = Yup.object().shape({
   email: Yup.string()
@@ -11,7 +14,20 @@ const validation = Yup.object().shape({
   password: Yup.string().required("La contraseña es obligatoria"),
 });
 
+const actionDispatch = (dispatch) => ({
+  setLogin: (auth) => dispatch(setLogin(auth)),
+});
+
 export const LoginPage = () => {
+  const { setLogin } = actionDispatch(useDispatch());
+  const login = async ({ email, password }) => {
+    const response = await authService
+      .login({ email, password })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+    if (response) setLogin(response);
+  };
   const initialValues = {
     email: "",
     password: "",
@@ -19,7 +35,7 @@ export const LoginPage = () => {
   };
 
   const handleLogin = (values) => {
-    console.log({ ...values });
+    login({ ...values });
   };
 
   return (
